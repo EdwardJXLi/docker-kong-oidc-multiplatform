@@ -1,4 +1,4 @@
-FROM kong/kong:3.4.0
+FROM kong/kong:3.9.1
 
 USER root
 
@@ -8,8 +8,8 @@ ENV DEV_PACKAGES="libssl-dev make gcc git curl unzip" \
     LUA_BASE_DIR="/usr/local/share/lua/5.1" \
     KONG_PLUGIN_OIDC_VER="1.4.0-1" \
     KONG_PLUGIN_COOKIES_TO_HEADERS_VER="1.2.0-1" \
-    LUA_RESTY_OIDC_VER="1.7.6-3" \
-    NGX_DISTRIBUTED_SHM_VER="1.0.8"
+    LUA_RESTY_OIDC_VER="1.8.0" \
+    NGX_DISTRIBUTED_SHM_VER="1.0.18"
 
 RUN set -ex \
     && apt-get update \
