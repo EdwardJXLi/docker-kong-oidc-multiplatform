@@ -30,9 +30,13 @@ RUN set -ex \
     && luarocks build kong-plugin-cookies-to-headers-${KONG_PLUGIN_COOKIES_TO_HEADERS_VER}.rockspec \
     # Patch nginx_kong.lua for kong-oidc session_secret
     && TPL=${LUA_BASE_DIR}/kong/templates/nginx_kong.lua \
+    # Adds additional nginx config to the template
+    && sed -i '/server_tokens off;/a\ \n\
+\${{X_ADDITIONAL_NGINX_CONFIG}}\n\
+    ' "$TPL" \
     # May cause side effects when using another nginx under this kong, unless set to the same value
     && sed -i '/server_name kong;/a\ \n\
-    set \$session_secret "\${{X_SESSION_SECRET}}";\n\
+set \$session_secret "\${{X_SESSION_SECRET}}";\n\
     ' "$TPL" \
     # Patch nginx_kong.lua to set dictionaries
     && sed -i -E '/^lua_shared_dict kong\s+.+$/i\ \n\
@@ -134,6 +138,7 @@ x_oidc_cache_jwks_size = 128k\n\
 x_oidc_cache_introspection_size = 128k\n\
 \n\
 x_nolog_list_file =\n\
+x_additional_nginx_config =\n\
 \n\
 " "$TPL" \
     ## Cleanup
