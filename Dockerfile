@@ -2,8 +2,6 @@ FROM kong/kong:3.9.1
 
 USER root
 
-LABEL authors="Cristian Chiru <cristian.chiru@revomatico.com>"
-
 ENV DEV_PACKAGES="libssl-dev make gcc git curl unzip" \
     LUA_BASE_DIR="/usr/local/share/lua/5.1" \
     KONG_PLUGIN_OIDC_VER="1.4.0-1" \
